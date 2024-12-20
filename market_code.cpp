@@ -111,3 +111,59 @@ struct node *head=NULL;
 		cout<<"\n<<<Not found>>\n\n";
 	}
 	}
+	void modify()
+	{
+		int id;
+		double pre;        //    pre for price
+		string pName;
+		int nid; int nq;     //   pName for new name
+		if (head == NULL)
+    {
+    	system("cls");
+        cout<<"List is empty"<<endl;
+    }
+         else
+	{    
+	    display();
+		cout<<"\n\nEnter ID to modify product Name and its price:\n";
+		cin>>id;
+		struct node *cur=head;
+		int pos=0;
+		int count=display();               //   for load no of nodes
+	    pos=search(id);
+	                            //   for check weather desire node is exist or not
+	    if(pos<=count)
+    {
+		while(cur->ID!=id)
+        {
+			cur=cur->next;
+		}
+		cout<<"\nOld ID : "<<cur->ID<<endl;
+		cout<<"\nOld Name : "<<cur->proName<<endl;
+		cout<<"\nOld Price : "<<cur->prePrice<<endl;
+		cout<<"\nOld Quantity : "<<cur->quantity<<endl;
+
+		cout<<endl<<endl;
+		cout<<"Enter new ID:";
+		cin>>nid;
+		cur->ID=nid;
+		cout<<"Enter new Name:";
+		cin>>pName;
+		cur->proName=pName;
+		cout<<"Enter new Price:";
+		cin>>pre;
+		cur->prePrice=pre;
+		cout<<"Enter new Quantity:";
+		cin>>nq;
+		cur->quantity=nq;
+		cout<<"\n-------Product Modified-------\n";
+	}
+
+	    else
+    {
+		cout<<id<<" is <<<Not found>>\n\n";
+	}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
