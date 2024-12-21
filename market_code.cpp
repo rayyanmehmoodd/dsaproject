@@ -299,4 +299,170 @@ int display()
 		  }
             }
 
+   int membership()
+ {		
+ 		string customer;
+        cout<<"\n\t\t Enter Your Name :"; 
+		cin>>customer;
+        enqueue(customer);
+        system("cls");
+        display();
+		string products[20];
+		   //   for display sold items
+		int pay=0,no,c=0,price,id,i=1;
+
+        if(head==NULL)
+        {
+	    cout<<"\n<<<<There is no items to buy>>>>\n\n";
+        }
+	    else
+        {
+		cout<<"How many items you want to buy!\n";
+		cin>>no; 
+        int count=display();           //   for store no of nodes  in c
+		while (i<=no)
+        {
+			struct node *cur=head;
+            int quant,cho;   a:           //   quant   for quantity  and cho for choice
+            cout<<"Enter id of item that you want to buy: ";
+            int id,pos=0;
+            cin>>id;
+            if(id==-1)
+			{
+			system("cls"); 	
+			}
+	        pos=search(id);
+	        if(pos<=count)
+        {
+	                        //     item is available in store
+		 while(cur->ID!=id)
+        {
+			cur=cur->next;
+		 }
+           cout<<"How many quantities you want:";
+	       cin>>quant;
+	       if(cur->quantity<quant)
+           {
+               cout<<"\n\n\t\t\t----The Quantity You Entered is not available---"<<endl;
+               cout<<"\n\t\t\t-----(Press -1 for Back to Main Menu)------"<<endl;
+               goto a;
+               
+           }
+           products[c]=cur->proName;   // this will conatin the items buy names in array; 
+		   c++;   
+		   
+	       pay=pay+(cur->prePrice*quant);         //     calculate Bill
+	       cur->quantity=cur->quantity-quant;           //    change quantity
+	       i++;
+
+	     }
+	    else
+        {    
+             
+		cout<<"\n<<<<<<<<<This item is not available in our store at this time>>>>\n\n";
+		
+}
+}
+        
+	    system("cls");
+        cout<<"\n\n\n\n\t\t\tYou have bought : ";
+        for(int i=0;i<no;i++)
+      {              //    show that item you have bought
+        cout<<products[i]<<" ";
+       }
+ 	    price=pay*(0.80);           //    with 20% discount as member
+	    cout<<"\n\nOriginal price : "<<pay;
+        cout<<"\n with 20% discount: "<<price;
+    }
+        
+        if(pay>=3000){
+        							          //    coupon
+        cout<<"\n You have won coupon worth rupees 500 "<< "\nThank you for shopping !\n\n";
+		}
+         else{
+         cout<<"\n shop more to win gift coupons"<< "\nThank you for shopping !\n\n";
+		}
+ 
+}
+
+ /////////////////////////////////////////////////////////////////////////////////////////
+  int newmembership()
+ {		
+ 		string customer;
+        cout<<"\n\t\t Enter Your Name :"; 
+		cin>>customer;
+        enqueue(customer);
+        system("cls");
+        display();
+		string products[20];
+		   //   for display sold items
+		int pay=0,no,c=0,price,id,i=1;
+
+        if(head==NULL)
+        {
+	    cout<<"\n<<<<There is no items to buy>>>>\n\n";
+        }
+	    else
+        {
+		cout<<"How many items you want to buy!\n";
+		cin>>no; 
+        int count=display();           //   for store no of nodes  in c
+		while (i<=no)
+        {
+			struct node *cur=head;
+            int quant,cho;   a:           //   quant   for quantity  and cho for choice
+            cout<<"Enter id of item that you want to buy: ";
+            int id,pos=0;
+            cin>>id;
+            if(id==-1)
+			{
+			system("cls"); 	
+			}
+	        pos=search(id);
+	        if(pos<=count)
+        {
+	                        //     item is available in store
+		 while(cur->ID!=id)
+        {
+			cur=cur->next;
+		 }
+           cout<<"How many quantities you want:";
+	       cin>>quant;
+	       if(cur->quantity<quant)
+           {
+               cout<<"\n\n\t\t\t----The Quantity You Entered is not available---"<<endl;
+               cout<<"\n\t\t\t-----(Press -1 for Back to Main Menu)------"<<endl;
+               goto a;
+               
+           }
+           products[c]=cur->proName;   // this will conatin the items buy names in array; 
+		   c++;   
+		   
+	       pay=pay+(cur->prePrice*quant);         //     calculate Bill
+	       cur->quantity=cur->quantity-quant;           //    change quantity
+	       i++;
+
+	     }
+	    else
+        {    
+             
+		cout<<"\n<<<<<<<<<This item is not available in our store at this time>>>>\n\n";
+		
+}
+}        
+	    system("cls");
+        cout<<"\n\n\n\n\t\t\tYou have bought : ";
+        for(int i=0;i<no;i++)
+      {              //    show that item you have bought
+        cout<<products[i]<<" ";
+       }
+ 	    price=(pay+1000);           //    amount  + membership (will get discount from next time)
+	    cout<<"\n\nOriginal price : "<<pay;
+        cout<<"\n with purchase of membership card: "<<price; //adding price of membership card
+}
+        cout<<"\n You will get membership discount from next time "<< "\nThank you for shopping !\n\n";
+
+ 
+}
+
 
