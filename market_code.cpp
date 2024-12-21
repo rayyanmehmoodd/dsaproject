@@ -466,3 +466,107 @@ int display()
 }
 
 
+  int stock()
+	{
+		system("cls");
+			int ch;
+
+ 
+	do {
+
+                 //            choice for below message
+
+
+
+	cout<<"\t\t============================================"<<endl;
+	cout<<"\t\t|                Stock                     |"<<endl;
+	cout<<"\t\t============================================"<<endl;
+
+	cout<<"\t\t     Enter 1 for ADD a new product    "<<endl;
+	cout<<"\t\t     Enter 2 to display all products   "<<endl;
+	cout<<"\t\t     Enter 3 for MODIFY Existing product"<<endl;
+	cout<<"\t\t     Enter 4 for Delete a particular product item"<<endl;
+	cout<<"\t\t     Enter 0 for Main Menu"<<endl;
+
+
+	cout<<"\nEnter Your choice >>>";   cin>>ch;
+	switch(ch){
+	case 1:
+	beg();
+	break;
+case 2:
+	system("cls");
+    display();
+    break;
+case 3:
+	modify();
+	system("cls");
+	
+	break;
+case 4:
+	delPro();
+//cout<<"\n-------Product is Deleted-------\n";
+	break;
+
+default: system("cls");
+	}
+}
+while(ch!=0)	;
+}
+void administator()
+	{
+		int ch;
+		system("cls");
+			
+
+ 
+	do {
+
+                 //            choice for below message
+
+
+
+	cout<<"\t\t============================================"<<endl;
+	cout<<"\t\t|          Administator Portal              |"<<endl;
+	cout<<"\t\t============================================"<<endl;
+
+	cout<<"\t\t     Enter 1 to display all products   "<<endl;
+	cout<<"\t\t     Enter 2 for Customers List "<<endl;
+	cout<<"\t\t     Enter 3 for Dequeue customer"<<endl;
+	cout<<"\t\t     Enter 4 for Generate hash"<<endl;
+	cout<<"\t\t     Enter 0 for Main Menu"<<endl;
+
+
+	cout<<"\nEnter Your choice >>>";   cin>>ch;
+	switch(ch){
+case 1:
+	system("cls");
+    display();
+    break;
+case 2:
+	  system("cls");
+		
+      cout<<"|============CUSTOMERS NAMES LIST==============|"<<endl;
+	  displayQueue();
+	   break;
+case 3:
+	   system("cls");
+	  cout<<"|============CUSTOMERS NAMES LIST==============|"<<endl;
+	  dequeue();
+      displayQueue();
+	break;
+case 4:
+             int x,n;
+            cout << "Enter element to generate hash = ";
+			cin >> x;  cout<<"Of total list number : "; cin>>n;
+			cout << "Hash of " << x << " is = " << customhash(x,n );
+			
+			break;
+
+
+default: system("cls");
+
+	}
+}
+while(ch!=0)	;
+}
