@@ -605,3 +605,108 @@ int main()
 	if(ps==1161)
 	{
 		cout<<"\t\tWelcome \n\n";
+int ch;
+
+	while(ch!=6){
+	
+	                     //            choice for below message
+
+    cout<<"\n\t\t|--------<Main Menu>-----------|";
+      cout<<"\n\n";
+	cout<<"\t\t 1)Stock                  \n";
+	cout<<"\t\t 2)Staff details          \n";
+	cout<<"\t\t 3)Customer               \n";
+	cout<<"\t\t 4)Membership Customer    \n";
+	cout<<"\t\t 5)Admin                  \n";
+	cout<<"\t\t 6)Exit                   \n";
+
+
+
+	cout<<"\nEnter Your choice >>>";cin>>ch;
+	switch(ch){
+	case 1:
+
+		stock();
+		
+		break;
+
+	case 2:
+		
+		{
+    	ofstream fout; 
+		string line; 
+		fout.open("Staff_Data.txt"); 
+	
+		while (fout) { 
+			getline(cin,line); 
+			if (line == "-1") 
+			break; 
+			fout << line << endl; 
+		} 
+			fout.close(); 
+			ifstream fin; 
+	//		fin.open("Data.txt"); 
+
+	//	while (fin) { 		
+	//		getline(fin, line); 
+	//		cout << line << endl; 
+	//	} 
+
+	//		fin.close();
+	// 		return(0); 
+	}
+		
+	    break;
+
+	case 3:
+		cout<<endl<<endl;
+		bpop();
+		system("pause");
+	    buy();
+	    break;
+    	
+    	
+	case 4:
+		
+		int choice;
+		while(choice!=2){
+			cout<<"\t\t 1)Existing Member                  \n";
+			cout<<"\t\t 2)New Member Register              \n";
+			
+				cout<<"\nEnter Your choice >>>";cin>>choice;
+		switch(choice){
+		case 1:
+			membership();
+			break;
+		case 2:
+			newmembership();
+			break;
+		}
+		break;
+	}
+	break;
+	
+		
+
+	
+	
+	case 5:
+    	administator();		
+    	break;
+    	
+		    	
+    case 6:
+    	cout<<"\n\n\t\t\t\t\tThank You\t\t\t\t";
+    	break;
+   
+	}
+
+}
+return 0;
+	
+	
+}
+	else{
+	cout<<"\t\tWrong password \n\n";
+	}
+}
