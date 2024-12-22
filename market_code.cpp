@@ -2,37 +2,170 @@
 #include<string>
 #include <sstream>
 #include <bits/stdc++.h>
-#include <iostream>
 #include<windows.h>
-#include"queue1.h"
-#include"stackme.h"
-
+#include"animation.h"
 using namespace std;
+
 
 int search(int);
 int display();
 string check(int); 
 
-struct node
- {
-	int ID;
-	string proName;
-	double prePrice;
-	int quantity;
-    struct    node* next;
+// Queue implementation
+struct Node {
+    string cname;
+    Node *link;
 };
 
-struct node *head=NULL;
+Node *front = NULL;
+Node *rear = NULL;
+
+bool isempty() {
+    if(front == NULL && rear == NULL)
+        return true;
+    else
+        return false;
+}
+
+void enqueue(string name) {
+    Node *ptr = new Node();
+    ptr->cname = name;
+    ptr->link = NULL;
+
+    if(front == NULL) {
+        front = ptr;
+        rear = ptr;
+    } else {
+        rear->link = ptr;
+        rear = ptr;
+    }
+}
+
+void dequeue() {
+    if(isempty())
+        cout<<"Queue is empty\n";
+    else if(front == rear) {
+        free(front);
+        front = rear = NULL;
+    } else {
+        Node *ptr = front;
+        front = front->link;
+        free(ptr);
+    }
+}
+
+void showfront() {
+    if(isempty())
+        cout<<"Queue is empty\n";
+    else
+        cout<<"element at front is:"<<front->cname<<"\n";
+}
+
+void displayQueue() {
+    if(isempty())
+        cout<<"Queue is empty\n";
+    else {
+        Node *ptr = front;
+        while(ptr != NULL) {
+            cout<<"\t"<<ptr->cname<<"\t  "<<endl;
+            ptr = ptr->link;
+        }
+    }
+}
+
+// Stack implementation
+struct bucket {
+    int data;
+    bucket* link;
+};
+
+struct bucket* top;
+
+void push(int data) {
+    struct bucket* temp;
+    temp = new bucket();
+
+    if(!temp) {
+        cout<<"\nHeap Overflow";
+        exit(1);
+    }
+
+    temp->data = data;
+    temp->link = top;
+    top = temp;
+}
+
+int isEmpty() {
+    return top == NULL;
+}
+
+int peek() {
+    if(!isEmpty())
+        return top->data;
+    else
+        exit(1);
+}
+
+void bpop() {
+    struct bucket* temp;
+
+    if(top == NULL) {
+        cout<<"\nStack Underflow"<<endl;
+        exit(1);
+    } else {
+        temp = top;
+        top = top->link;
+        temp->link = NULL;
+        free(temp);
+    }
+    cout<<"Your Trolli No is :"<<top->data<<endl;
+    cout<<"                  ___"<<endl;
+    cout<<"                 /  |"<<endl;
+    cout<<"  ______________/   --"<<endl;
+    cout<<" |___/__ /___/_|     "<<endl;
+    cout<<" |__/___/___/__|     "<<endl;
+    cout<<" |_/___/___/___|     "<<endl;
+    cout<<"    _______/         "<<endl;
+    cout<<"     O   O           "<<endl;
+}
+
+void bdisplay() {
+    struct bucket* temp;
+
+    if(top == NULL) {
+        cout<<"\nStack Underflow";
+        exit(1);
+    } else {
+        temp = top;
+        while(temp != NULL) {
+            cout<<temp->data<<" ";
+            temp = temp->link;
+        }
+    }
+}
+
+// Original supermarket code
 
 
+struct node {
+    int ID;
+    string proName;
+    double prePrice;
+    int quantity;
+    struct node* next;
+};
+
+struct node *head = NULL;
+
+////////////////////////////////////////////////////////////////////
  void beg()
 {
 	system("cls");
 	int id,quant;           //  quant    for quantity
 	string name;
 	double pre;            //  pre for price
-	struct node *t=new node;
-	struct node *p=head;
+  node *t=new node;
+  node *p=head;
 
 
 	cout<<"\t\t\tEnter product ID:-";
@@ -68,6 +201,7 @@ struct node *head=NULL;
 
 	}
 
+///////////////////////////////////////////////////////////////////////////////////////////
 	int search(int id)                     //    for search item in list
  {
  	int count=1;
@@ -89,13 +223,14 @@ struct node *head=NULL;
 
 }
 
+////////////////////////////////////////////////////////////////////////
 	void delPro()
 	{
 		system("cls");
 		display();
 		int id;
-		struct node *cur=head;
-		struct node *pre=head;
+		 node *cur=head;
+		 node *pre=head;
 		cout<<"\n\nEnter ID to delete that product:\n\n";
 		cin>>id;
 		 if (head == NULL)
@@ -119,6 +254,7 @@ struct node *head=NULL;
 		cout<<"\n<<<Not found>>\n\n";
 	}
 	}
+//////////////////////////////////////////////////////////////////////////////////
 	void modify()
 	{
 		int id;
@@ -173,6 +309,8 @@ struct node *head=NULL;
 	}
 	}
 }
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 int display()
 {
@@ -263,7 +401,8 @@ int display()
 		cout<<"\n<<<<<<<<<This item is not available in our store at this time>>>>\n\n";
 		
 	    }
-}  string customer;
+}
+        string customer;
         cout<<"\n\t\t Enter Your Name :"; cin>>customer;
         enqueue(customer);
 	    system("cls");
@@ -303,7 +442,9 @@ int display()
 		  }
             }
 
-   int membership()
+
+ /////////////////////////////////////////////////////////////////////////////////////////
+ int membership()
  {		
  		string customer;
         cout<<"\n\t\t Enter Your Name :"; 
@@ -453,7 +594,8 @@ int display()
 		cout<<"\n<<<<<<<<<This item is not available in our store at this time>>>>\n\n";
 		
 }
-}        
+}
+        
 	    system("cls");
         cout<<"\n\n\n\n\t\t\tYou have bought : ";
         for(int i=0;i<no;i++)
@@ -469,8 +611,8 @@ int display()
  
 }
 
-
-  int stock()
+ ////////////////////////////////////////////////////////////////////////////////////////
+   int stock()
 	{
 		system("cls");
 			int ch;
@@ -517,6 +659,8 @@ default: system("cls");
 }
 while(ch!=0)	;
 }
+
+////////////////////////////////////////////////
 void administator()
 	{
 		int ch;
@@ -574,6 +718,13 @@ default: system("cls");
 }
 while(ch!=0)	;
 }
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////	                        
+                        
 int main()
 {
     
@@ -592,12 +743,19 @@ int main()
 	gotoxy(17,9);
 	cout<<"--------------------------------------------------"<<endl;
    	gotoxy(17,11);
-   	cout<<"|Subject Teacher ->> Sir Qasim Riaz <<-- |\n"<<endl;
+   	cout<<"|Subject Teacher ->> Gayathri.P MAM <<-- |\n"<<endl;
    	gotoxy(17,13);
    	cout<<">>>----Project Implemented By-----<<<"<<endl;
     gotoxy(22,15);
-   	cout<<"Rayyan Mehmood 2023602)"<<endl;
-   
+   	cout<<"JAGIRDAR ROHIT (19BCE0763)"<<endl;
+   	gotoxy(22,16);
+   	cout<<"KANDULA MONA REDDY  (19BCE0814)"<<endl;
+   	gotoxy(22,17);
+   	cout<<"KANDRA KSHEERAJ   (19BCE0829)"<<endl;
+   	gotoxy(22,18);
+   	cout<<"LIKHITHA MODUGULA  (19BCT0032)"<<endl;
+   	gotoxy(22,19);
+   	cout<<"KOTHA BRINDA VIVEK  (19BDS0070)"<<endl<<endl;
 	system("pause");
 	system("cls");
 	system("color Fc"); 
@@ -609,7 +767,9 @@ int main()
 	if(ps==1161)
 	{
 		cout<<"\t\tWelcome \n\n";
-int ch;
+
+	///////////////////////////
+    int ch;
 
 	while(ch!=6){
 	
@@ -714,3 +874,4 @@ return 0;
 	cout<<"\t\tWrong password \n\n";
 	}
 }
+
