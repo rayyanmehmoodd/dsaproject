@@ -743,19 +743,12 @@ int main()
 	gotoxy(17,9);
 	cout<<"--------------------------------------------------"<<endl;
    	gotoxy(17,11);
-   	cout<<"|Subject Teacher ->> Gayathri.P MAM <<-- |\n"<<endl;
+   	cout<<"|Subject Teacher ->> Sir Qasim Riaz <<-- |\n"<<endl;
    	gotoxy(17,13);
    	cout<<">>>----Project Implemented By-----<<<"<<endl;
     gotoxy(22,15);
-   	cout<<"JAGIRDAR ROHIT (19BCE0763)"<<endl;
-   	gotoxy(22,16);
-   	cout<<"KANDULA MONA REDDY  (19BCE0814)"<<endl;
-   	gotoxy(22,17);
-   	cout<<"KANDRA KSHEERAJ   (19BCE0829)"<<endl;
-   	gotoxy(22,18);
-   	cout<<"LIKHITHA MODUGULA  (19BCT0032)"<<endl;
-   	gotoxy(22,19);
-   	cout<<"KOTHA BRINDA VIVEK  (19BDS0070)"<<endl<<endl;
+   	cout<<"Rayyan Mehmood (2023602)"<<endl;
+  
 	system("pause");
 	system("cls");
 	system("color Fc"); 
