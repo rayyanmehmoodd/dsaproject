@@ -1,5 +1,6 @@
 #include<iostream>
 #include<string>
+#include <vector>
 #include <sstream>
 #include <bits/stdc++.h>
 #include<windows.h>
@@ -9,6 +10,7 @@ using namespace std;
 
 int search(int);
 int display();
+
 string check(int); 
 
 // Queue implementation
@@ -158,7 +160,7 @@ struct node {
 struct node *head = NULL;
 
 ////////////////////////////////////////////////////////////////////
- void beg()
+  void beg()
 {
 	system("cls");
 	int id,quant;           //  quant    for quantity
@@ -613,71 +615,253 @@ int display()
 
 // Add this function before the stock() function
 
-void sortByPrice() {
-    system("cls");
-    if (head == NULL) {
-        cout << "\n<<<<There are no items to sort>>>>\n\n";
-        return;
+class ProductSorter {
+private:
+    struct ProductData {
+        int id;
+        string name;
+        double price;
+        int quantity;
+        
+        ProductData(int _id, string _name, double _price, int _quant) {
+            id = _id;
+            name = _name;
+            price = _price;
+            quantity = _quant;
+        }
+    };
+    
+    vector<ProductData> products;
+    
+    // Helper method to copy linked list to array
+    void copyListToArray() {
+        products.clear();
+        struct node* temp = head;
+        
+        while (temp != NULL) {
+            products.push_back(ProductData(
+                temp->ID,
+                temp->proName,
+                temp->prePrice,
+                temp->quantity
+            ));
+            temp = temp->next;
+        }
     }
-
-    // Count number of nodes
-    int count = 0;
-    struct node* temp = head;
-    while (temp != NULL) {
-        count++;
-        temp = temp->next;
-    }
-
-    // Create arrays to store data
-    int ids[count];
-    string names[count];
-    double prices[count];
-    int quantities[count];
-
-    // Copy linked list data to arrays
-    temp = head;
-    for (int i = 0; i < count; i++) {
-        ids[i] = temp->ID;
-        names[i] = temp->proName;
-        prices[i] = temp->prePrice;
-        quantities[i] = temp->quantity;
-        temp = temp->next;
-    }
-
-    // Bubble sort based on price
-    for (int i = 0; i < count - 1; i++) {
-        for (int j = 0; j < count - i - 1; j++) {
-            if (prices[j] > prices[j + 1]) {
-                // Swap prices
-                double tempPrice = prices[j];
-                prices[j] = prices[j + 1];
-                prices[j + 1] = tempPrice;
-
-                // Swap IDs
-                int tempId = ids[j];
-                ids[j] = ids[j + 1];
-                ids[j + 1] = tempId;
-
-                // Swap names
-                string tempName = names[j];
-                names[j] = names[j + 1];
-                names[j + 1] = tempName;
-
-                // Swap quantities
-                int tempQuant = quantities[j];
-                quantities[j] = quantities[j + 1];
-                quantities[j + 1] = tempQuant;
+    
+    // Bubble sort implementation
+    void bubbleSort() {
+        int n = products.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (products[j].price > products[j + 1].price) {
+                    // Swap products
+                    ProductData temp = products[j];
+                    products[j] = products[j + 1];
+                    products[j + 1] = temp;
+                }
             }
         }
     }
-
-    // Display sorted products
-    cout << "Products sorted by price (ascending order):\n";
-    cout << "ID\t\tProduct Name\t\tPrice\t\tQuantity\n";
-    cout << "=================================================================|\n";
-    for (int i = 0; i < count; i++) {
-        cout << ids[i] << "\t\t" << names[i] << "\t\t\t" << prices[i] << "\t\t\t" << check(quantities[i]) << "\n";
+    
+    // Display sorted results
+    void displaySorted() {
+        cout << "Products sorted by price (ascending order):\n";
+        cout << "ID\t\tProduct Name\t\tPrice\t\tQuantity\n";
+        cout << "=================================================================|\n";
+        
+        for (const ProductData& product : products) {
+            cout << product.id << "\t\t" 
+                 << product.name << "\t\t\t" 
+                 << product.price << "\t\t\t" 
+                 << check(product.quantity) << "\n";
+        }
     }
+
+public:
+    void sortByPrice() {
+        system("cls");
+        if (head == NULL) {
+            cout << "\n<<<<There are no items to sort>>>>\n\n";
+            return;
+        }
+        
+        // Copy linked list data to array
+        copyListToArray();
+        
+        // Sort the array
+        bubbleSort();
+        
+        // Display sorted products
+        displaySorted();
+        
+        cout << "\nTotal products: " << products.size() << "\n\n";
+    }
+    
+    // Additional sorting methods can be added here
+    void sortByPriceDescending() {
+        sortByPrice();
+        reverse(products.begin(), products.end());
+        displaySorted();
+    }
+    
+    void sortByName() {
+        system("cls");
+        if (head == NULL) {
+            cout << "\n<<<<There are no items to sort>>>>\n\n";
+            return;
+        }
+        
+        copyListToArray();
+        
+        // Sort by name
+        sort(products.begin(), products.end(), 
+            [](const ProductData& a, const ProductData& b) {
+                return a.name < b.name;
+            });
+            
+        displaySorted();
+    }
+};
+
+
+ProductSorter productSorter;
+
+// Modified sorting function to use the class
+void sortProducts() {
+    system("cls");
+    int choice;
+    
+    cout << "\t\t=================================\n";
+    cout << "\t\t|        Sort Products          |\n";
+    cout << "\t\t=================================\n";
+    cout << "\t\t1. Sort by Price (Ascending)\n";
+    cout << "\t\t2. Sort by Price (Descending)\n";
+    cout << "\t\t3. Sort by Name\n";
+    cout << "\t\t0. Back\n\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
+    
+    switch(choice) {
+        case 1:
+            productSorter.sortByPrice();
+            break;
+        case 2:
+            productSorter.sortByPriceDescending();
+            break;
+        case 3:
+            productSorter.sortByName();
+            break;
+        default:
+            return;
+    }
+    
+    system("pause");
+}
+ ////////////////////////////////////////////////////////////////////////////////////////
+
+// Category Tree structure
+struct CategoryNode {
+    string category;
+    int productCount;
+    CategoryNode* left;
+    CategoryNode* right;
+    
+    CategoryNode(string cat) {
+        category = cat;
+        productCount = 1;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+CategoryNode* categoryRoot = NULL;
+
+// Insert into category tree
+CategoryNode* insertCategory(CategoryNode* root, string category) {
+    if (root == NULL) {
+        return new CategoryNode(category);
+    }
+    
+    if (category == root->category) {
+        root->productCount++;
+    }
+    else if (category < root->category) {
+        root->left = insertCategory(root->left, category);
+    }
+    else {
+        root->right = insertCategory(root->right, category);
+    }
+    
+    return root;
+}
+
+// Display categories in-order
+void displayCategories(CategoryNode* root) {
+    if (root != NULL) {
+        displayCategories(root->left);
+        cout << "\t\t" << root->category << " (" << root->productCount << " products)\n";
+        displayCategories(root->right);
+    }
+}
+
+// Add product with category
+void addProductWithCategory() {
+    system("cls");
+    int id, quant;
+    string name, category;
+    double pre;
+    node* t = new node;
+    node* p = head;
+
+    cout << "\t\t\tEnter product ID:-";
+    cin >> id;
+    t->ID = id;
+    cout << "\t\t\tEnter product Name:-";
+    cin >> name;
+    t->proName = name;
+    cout << "\t\t\tEnter product price:-";
+    cin >> pre;
+    t->prePrice = pre;
+    cout << "\t\t\tEnter product quantity:-";
+    cin >> quant;
+    t->quantity = quant;
+    cout << "\t\t\tEnter product category (Grocery/Electronics/Clothing/etc):-";
+    cin >> category;
+
+    // Add to linked list
+    if (head == NULL) {
+        t->next = head;
+        head = t;
+    }
+    else {
+        while (p->next != NULL) {
+            p = p->next;
+        }
+        p->next = t;
+        t->next = NULL;
+    }
+
+    // Add to category tree
+    categoryRoot = insertCategory(categoryRoot, category);
+    
+    system("cls");
+    cout << "\n\n\t\t\t\tProduct Added Successfully!\n\n\n";
+}
+
+// View category statistics
+void viewCategories() {
+    system("cls");
+    if (categoryRoot == NULL) {
+        cout << "\n\t\tNo categories exist yet!\n";
+        return;
+    }
+    
+    cout << "\n\t\tProduct Categories:\n";
+    cout << "\t\t==================\n";
+    displayCategories(categoryRoot);
+    cout << "\n";
+    system("pause");
 }
 
  ////////////////////////////////////////////////////////////////////////////////////////
@@ -702,6 +886,8 @@ void sortByPrice() {
 	cout<<"\t\t     Enter 3 for MODIFY Existing product"<<endl;
 	cout<<"\t\t     Enter 4 for Delete a particular product item"<<endl;
 	cout<<"\t\t     Enter 5 to Sort products by price"<<endl;
+	cout<<"\t\t     Enter 6 to Add Product with Category"<<endl;
+  cout<<"\t\t     Enter 7 to View Category Statistics"<<endl;
 	cout<<"\t\t     Enter 0 for Main Menu"<<endl;
 
 
@@ -724,8 +910,14 @@ case 4:
 //cout<<"\n-------Product is Deleted-------\n";
 	break;
 case 5:
-    sortByPrice();
+    sortProducts();
     system("pause");
+    break;
+case 6:
+    addProductWithCategory();
+    break;
+case 7:
+    viewCategories();
     break;
 
 default: system("cls");
