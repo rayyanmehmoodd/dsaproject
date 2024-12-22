@@ -570,3 +570,38 @@ default: system("cls");
 }
 while(ch!=0)	;
 }
+int main()
+{
+    
+     for(int i=0;i<=51;i++)
+     {
+     
+     	push(i);
+	 }
+
+
+		system("color 0C");     //  for console color
+	gotoxy(17,5);
+	cout<<"--------------------------------------------------"<<endl;
+	gotoxy(17,7);
+	cout<<"||            Super Market Project             ||"<<endl;
+	gotoxy(17,9);
+	cout<<"--------------------------------------------------"<<endl;
+   	gotoxy(17,11);
+   	cout<<"|Subject Teacher ->> Sir Qasim Riaz <<-- |\n"<<endl;
+   	gotoxy(17,13);
+   	cout<<">>>----Project Implemented By-----<<<"<<endl;
+    gotoxy(22,15);
+   	cout<<"Rayyan Mehmood 2023602)"<<endl;
+   
+	system("pause");
+	system("cls");
+	system("color Fc"); 
+	///////////////////////////
+	int ps,profit=0;
+	cout<<"\n\t\t|	Super Market Login	|\n";
+	cout<<"\n\t\tEnter Password: ";
+	cin>>ps;
+	if(ps==1161)
+	{
+		cout<<"\t\tWelcome \n\n";
