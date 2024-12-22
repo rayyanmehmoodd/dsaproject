@@ -13,6 +13,50 @@ int display();
 
 string check(int); 
 
+struct CategoryNode {
+    string category;
+    int productCount;
+    CategoryNode* left;
+    CategoryNode* right;
+    
+    CategoryNode(string cat) {
+        category = cat;
+        productCount = 1;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+CategoryNode* categoryRoot = NULL;
+
+// Insert into category tree
+CategoryNode* insertCategory(CategoryNode* root, string category) {
+    if (root == NULL) {
+        return new CategoryNode(category);
+    }
+    
+    if (category == root->category) {
+        root->productCount++;
+    }
+    else if (category < root->category) {
+        root->left = insertCategory(root->left, category);
+    }
+    else {
+        root->right = insertCategory(root->right, category);
+    }
+    
+    return root;
+}
+
+// Display categories in-order
+void displayCategories(CategoryNode* root) {
+    if (root != NULL) {
+        displayCategories(root->left);
+        cout << "\t\t" << root->category << " (" << root->productCount << " products)\n";
+        displayCategories(root->right);
+    }
+}
+
 // Queue implementation
 struct Node {
     string cname;
@@ -154,54 +198,59 @@ struct node {
     string proName;
     double prePrice;
     int quantity;
+		string category; 
     struct node* next;
 };
 
 struct node *head = NULL;
 
 ////////////////////////////////////////////////////////////////////
-  void beg()
+void addproduct()
 {
-	system("cls");
-	int id,quant;           //  quant    for quantity
-	string name;
-	double pre;            //  pre for price
-  node *t=new node;
-  node *p=head;
+    system("cls");
+    int id,quant;
+    string name;
+    string category;    // Added this line
+    double pre;
+    node *t=new node;
+    node *p=head;
 
+    cout<<"\t\t\tEnter product ID:-";
+    cin>>id;
+    t->ID=id;
+    cout<<"\t\t\tEnter product Name:-";
+    cin>>name;
+    t->proName=name;
+    cout<<"\t\t\tEnter product price:-";
+    cin>>pre;
+    t->prePrice=pre;
+    cout<<"\t\t\tEnter product quantity:-";
+    cin>>quant;
+    t->quantity=quant;
+    cout<<"\t\t\tEnter product category:-";    // Added this line
+    cin>>category;                             // Added this line
+    t->category = category;                    // Added this line
 
-	cout<<"\t\t\tEnter product ID:-";
-	cin>>id;
-	t->ID=id;
-	cout<<"\t\t\tEnter product Name:-";
-	cin>>name;
-	t->proName=name;
-	cout<<"\t\t\tEnter product price:-";
-	cin>>pre;
-	t->prePrice=pre;
-	
-	cout<<"\t\t\tEnter product quantity:-";
-	cin>>quant;
-	t->quantity=quant;
-	if(head==NULL)
-	{
-	t->next=head;
-	head=t;
-	}
-	else
-	{
-		while(p->next!=NULL)
+    if(head==NULL)
     {
-		p=p->next;
-                        }
+        t->next=head;
+        head=t;
+    }
+    else
+    {
+        while(p->next!=NULL)
+        {
+            p=p->next;
+        }
         p->next=t;
         t->next=NULL;
-		
-	}	
-	system("cls");
+    }
+    
+    categoryRoot = insertCategory(categoryRoot, category);    // Added this line
+    
+    system("cls");
     cout<<"\n\n\t\t\t\tThis product is Inserted!\n\n\n";
-
-	}
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 	int search(int id)                     //    for search item in list
@@ -316,21 +365,21 @@ struct node *head = NULL;
 
 int display()
 {
-		system("cls");
-		int c=0;             //   c for count products
-		struct node *p=head;
-		cout<<"Existing products are:\n";
-		cout<<"ID\t\tProduct Name\t\tPrice\t\tQuantity\n";
-		cout<<"=================================================================|\n";
-		while(p!=NULL)
-		{
-			cout<<p->ID<<"\t\t"<<p->proName<<"\t\t\t"<<p->prePrice<<"\t\t\t"<<check(p->quantity)<<"\n"; //    call   check func and pass quantity
-			p=p->next;
-			c=c+1;
-		}
-		cout<<"\nTotal products in our store is : "<<c<<"\n\n\n";
-		return c;
-	    }
+    system("cls");
+    int c=0;
+    struct node *p=head;
+    cout<<"Existing products are:\n";
+    cout<<"ID\t\tProduct Name\t\tPrice\t\tQuantity\tCategory\n";    // Modified this line
+    cout<<"==================================================================================|\n";
+    while(p!=NULL)
+    {
+        cout<<p->ID<<"\t\t"<<p->proName<<"\t\t\t"<<p->prePrice<<"\t\t\t"<<check(p->quantity)<<"\t\t"<<p->category<<"\n";    // Added category
+        p=p->next;
+        c=c+1;
+    }
+    cout<<"\nTotal products in our store is : "<<c<<"\n\n\n";
+    return c;
+}
 ////////////////////////////////////////////////////////////////////////////////////////
 	    string check(int quant)
 
@@ -760,108 +809,97 @@ void sortProducts() {
 }
  ////////////////////////////////////////////////////////////////////////////////////////
 
-// Category Tree structure
-struct CategoryNode {
-    string category;
-    int productCount;
-    CategoryNode* left;
-    CategoryNode* right;
-    
-    CategoryNode(string cat) {
-        category = cat;
-        productCount = 1;
-        left = NULL;
-        right = NULL;
-    }
-};
 
-CategoryNode* categoryRoot = NULL;
-
-// Insert into category tree
-CategoryNode* insertCategory(CategoryNode* root, string category) {
-    if (root == NULL) {
-        return new CategoryNode(category);
-    }
-    
-    if (category == root->category) {
-        root->productCount++;
-    }
-    else if (category < root->category) {
-        root->left = insertCategory(root->left, category);
-    }
-    else {
-        root->right = insertCategory(root->right, category);
-    }
-    
-    return root;
-}
-
-// Display categories in-order
-void displayCategories(CategoryNode* root) {
-    if (root != NULL) {
-        displayCategories(root->left);
-        cout << "\t\t" << root->category << " (" << root->productCount << " products)\n";
-        displayCategories(root->right);
-    }
-}
-
-// Add product with category
-void addProductWithCategory() {
+void categoryManagement() {
     system("cls");
-    int id, quant;
-    string name, category;
-    double pre;
-    node* t = new node;
-    node* p = head;
-
-    cout << "\t\t\tEnter product ID:-";
-    cin >> id;
-    t->ID = id;
-    cout << "\t\t\tEnter product Name:-";
-    cin >> name;
-    t->proName = name;
-    cout << "\t\t\tEnter product price:-";
-    cin >> pre;
-    t->prePrice = pre;
-    cout << "\t\t\tEnter product quantity:-";
-    cin >> quant;
-    t->quantity = quant;
-    cout << "\t\t\tEnter product category (Grocery/Electronics/Clothing/etc):-";
-    cin >> category;
-
-    // Add to linked list
-    if (head == NULL) {
-        t->next = head;
-        head = t;
-    }
-    else {
-        while (p->next != NULL) {
-            p = p->next;
+    int choice;
+    
+    do {
+        cout << "\t\t============================================" << endl;
+        cout << "\t\t|          Category Management             |" << endl;
+        cout << "\t\t============================================" << endl;
+        cout << "\t\t     1. View All Categories               " << endl;
+        cout << "\t\t     2. View Products by Category         " << endl;
+        cout << "\t\t     3. Category Statistics               " << endl;
+        cout << "\t\t     0. Back to Main Menu                 " << endl;
+        
+        cout << "\nEnter Your choice >>> ";
+        cin >> choice;
+        
+        switch(choice) {
+            case 1: {
+                system("cls");
+                cout << "\n\t\tProduct Categories and Counts:\n";
+                cout << "\t\t==========================\n";
+                displayCategories(categoryRoot);
+                cout << "\n";
+                system("pause");
+                break;
+            }
+            case 2: {
+                system("cls");
+                string searchCategory;
+                cout << "Enter category to view: ";
+                cin >> searchCategory;
+                
+                cout << "\nProducts in category '" << searchCategory << "':\n";
+                cout << "ID\t\tProduct Name\t\tPrice\t\tQuantity\n";
+                cout << "=================================================================|\n";
+                
+                struct node* temp = head;
+                bool found = false;
+                
+                while(temp != NULL) {
+                    if(temp->category == searchCategory) {
+                        cout << temp->ID << "\t\t"
+                             << temp->proName << "\t\t\t"
+                             << temp->prePrice << "\t\t\t"
+                             << check(temp->quantity) << "\n";
+                        found = true;
+                    }
+                    temp = temp->next;
+                }
+                
+                if(!found) {
+                    cout << "\nNo products found in this category!\n";
+                }
+                system("pause");
+                break;
+            }
+            case 3: {
+                system("cls");
+                cout << "\n\t\tCategory Statistics:\n";
+                cout << "\t\t==================\n";
+                
+                // Count total categories
+                int totalCategories = 0;
+                int maxProducts = 0;
+                string largestCategory;
+                
+                function<void(CategoryNode*)> countCategories = [&](CategoryNode* root) {
+                    if(root != NULL) {
+                        totalCategories++;
+                        if(root->productCount > maxProducts) {
+                            maxProducts = root->productCount;
+                            largestCategory = root->category;
+                        }
+                        countCategories(root->left);
+                        countCategories(root->right);
+                    }
+                };
+                
+                countCategories(categoryRoot);
+                
+                cout << "\t\tTotal Categories: " << totalCategories << "\n";
+                cout << "\t\tLargest Category: " << largestCategory 
+                     << " (" << maxProducts << " products)\n\n";
+                     
+                system("pause");
+                break;
+            }
         }
-        p->next = t;
-        t->next = NULL;
-    }
-
-    // Add to category tree
-    categoryRoot = insertCategory(categoryRoot, category);
-    
-    system("cls");
-    cout << "\n\n\t\t\t\tProduct Added Successfully!\n\n\n";
-}
-
-// View category statistics
-void viewCategories() {
-    system("cls");
-    if (categoryRoot == NULL) {
-        cout << "\n\t\tNo categories exist yet!\n";
-        return;
-    }
-    
-    cout << "\n\t\tProduct Categories:\n";
-    cout << "\t\t==================\n";
-    displayCategories(categoryRoot);
-    cout << "\n";
-    system("pause");
+        system("cls");
+    } while(choice != 0);
 }
 
  ////////////////////////////////////////////////////////////////////////////////////////
@@ -886,15 +924,14 @@ void viewCategories() {
 	cout<<"\t\t     Enter 3 for MODIFY Existing product"<<endl;
 	cout<<"\t\t     Enter 4 for Delete a particular product item"<<endl;
 	cout<<"\t\t     Enter 5 to Sort products by price"<<endl;
-	cout<<"\t\t     Enter 6 to Add Product with Category"<<endl;
-  cout<<"\t\t     Enter 7 to View Category Statistics"<<endl;
+	cout<<"\t\t     Enter 6 for Category Management "<<endl;
 	cout<<"\t\t     Enter 0 for Main Menu"<<endl;
 
 
 	cout<<"\nEnter Your choice >>>";   cin>>ch;
 	switch(ch){
 	case 1:
-	beg();
+	addproduct();
 	break;
 case 2:
 	system("cls");
@@ -914,10 +951,7 @@ case 5:
     system("pause");
     break;
 case 6:
-    addProductWithCategory();
-    break;
-case 7:
-    viewCategories();
+    categoryManagement();
     break;
 
 default: system("cls");
