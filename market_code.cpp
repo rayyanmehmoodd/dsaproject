@@ -3,6 +3,10 @@
 #include <sstream>
 #include <bits/stdc++.h>
 #include <iostream>
+#include<windows.h>
+#include"queue1.h"
+#include"stackme.h"
+
 using namespace std;
 
 int search(int);
