@@ -8,6 +8,8 @@
 using namespace std;
 
 
+
+
 int search(int);
 int display();
 
@@ -662,7 +664,6 @@ int display()
  
 }/////////////////////////////////////////////////////////////////////////////////////////
 
-// Add this function before the stock() function
 
 class ProductSorter {
 private:
@@ -682,7 +683,7 @@ private:
     
     vector<ProductData> products;
     
-    // Helper method to copy linked list to array
+
     void copyListToArray() {
         products.clear();
         struct node* temp = head;
@@ -735,7 +736,7 @@ public:
             return;
         }
         
-        // Copy linked list data to array
+    
         copyListToArray();
         
         // Sort the array
@@ -747,7 +748,7 @@ public:
         cout << "\nTotal products: " << products.size() << "\n\n";
     }
     
-    // Additional sorting methods can be added here
+
     void sortByPriceDescending() {
         sortByPrice();
         reverse(products.begin(), products.end());
@@ -776,7 +777,7 @@ public:
 
 ProductSorter productSorter;
 
-// Modified sorting function to use the class
+
 void sortProducts() {
     system("cls");
     int choice;
