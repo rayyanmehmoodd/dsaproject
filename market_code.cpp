@@ -609,6 +609,75 @@ int display()
         cout<<"\n You will get membership discount from next time "<< "\nThank you for shopping !\n\n";
 
  
+}/////////////////////////////////////////////////////////////////////////////////////////
+
+// Add this function before the stock() function
+
+void sortByPrice() {
+    system("cls");
+    if (head == NULL) {
+        cout << "\n<<<<There are no items to sort>>>>\n\n";
+        return;
+    }
+
+    // Count number of nodes
+    int count = 0;
+    struct node* temp = head;
+    while (temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+
+    // Create arrays to store data
+    int ids[count];
+    string names[count];
+    double prices[count];
+    int quantities[count];
+
+    // Copy linked list data to arrays
+    temp = head;
+    for (int i = 0; i < count; i++) {
+        ids[i] = temp->ID;
+        names[i] = temp->proName;
+        prices[i] = temp->prePrice;
+        quantities[i] = temp->quantity;
+        temp = temp->next;
+    }
+
+    // Bubble sort based on price
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (prices[j] > prices[j + 1]) {
+                // Swap prices
+                double tempPrice = prices[j];
+                prices[j] = prices[j + 1];
+                prices[j + 1] = tempPrice;
+
+                // Swap IDs
+                int tempId = ids[j];
+                ids[j] = ids[j + 1];
+                ids[j + 1] = tempId;
+
+                // Swap names
+                string tempName = names[j];
+                names[j] = names[j + 1];
+                names[j + 1] = tempName;
+
+                // Swap quantities
+                int tempQuant = quantities[j];
+                quantities[j] = quantities[j + 1];
+                quantities[j + 1] = tempQuant;
+            }
+        }
+    }
+
+    // Display sorted products
+    cout << "Products sorted by price (ascending order):\n";
+    cout << "ID\t\tProduct Name\t\tPrice\t\tQuantity\n";
+    cout << "=================================================================|\n";
+    for (int i = 0; i < count; i++) {
+        cout << ids[i] << "\t\t" << names[i] << "\t\t\t" << prices[i] << "\t\t\t" << check(quantities[i]) << "\n";
+    }
 }
 
  ////////////////////////////////////////////////////////////////////////////////////////
@@ -632,6 +701,7 @@ int display()
 	cout<<"\t\t     Enter 2 to display all products   "<<endl;
 	cout<<"\t\t     Enter 3 for MODIFY Existing product"<<endl;
 	cout<<"\t\t     Enter 4 for Delete a particular product item"<<endl;
+	cout<<"\t\t     Enter 5 to Sort products by price"<<endl;
 	cout<<"\t\t     Enter 0 for Main Menu"<<endl;
 
 
@@ -653,6 +723,10 @@ case 4:
 	delPro();
 //cout<<"\n-------Product is Deleted-------\n";
 	break;
+case 5:
+    sortByPrice();
+    system("pause");
+    break;
 
 default: system("cls");
 	}
